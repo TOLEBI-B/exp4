@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exp4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exp4
+  template:
+    metadata:
+      labels:
+        app: exp4
+    spec:
+      containers:
+      - name: exp4
+        image: tolebi1/exp4:latest
+        ports:
+        - containerPort: 8990
+        env:
+        - name: DATABASE_URL
+          value: "postgres://postgres:Zxcvbnm123@host:5432/exp4"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exp4-service
+spec:
+  type: NodePort
+  selector:
+    app: exp4
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8990
+      nodePort: 30016  # Можно указать порт от 30000 до 32767
