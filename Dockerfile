@@ -1,3 +1,4 @@
+FROM golang:1.24 AS builder
 WORKDIR /app
 
 COPY go.mod ./
